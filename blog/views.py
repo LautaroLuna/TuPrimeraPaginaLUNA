@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from blog.models import Post
 from .forms import AutorForm, CategoriaForm, PostForm
@@ -11,8 +11,9 @@ def buscar_post(request):
     if query:
         resultados = Post.objects.filter(
             Q(titulo__icontains=query) |
-            Q(contenido__icontains=query)
-        )
+            Q(contenido__icontains=query) |
+            Q(categoria__nombre__icontains=query)
+        ).distinct()
 
     return render(request, "blog/buscar_post.html", {"resultados": resultados, "query": query})
 
@@ -49,3 +50,8 @@ def nuevo_post(request):
     else:
         form = PostForm()
     return render(request, 'blog/nuevo_post.html', {'form': form})
+
+def detalle_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, 'blog/detalle_post.html', {'post': post})
+

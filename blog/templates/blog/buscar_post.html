@@ -3,7 +3,7 @@
 {% block contenido %}
 <h2>Buscar Posts</h2>
 <form method="get" action="{% url 'buscar_post' %}">
-    <input type="text" name="q" placeholder="Buscar por título o contenido" value="{{ query }}">
+    <input type="text" name="q" placeholder="Buscar por título, contenido o categoría" value="{{ query|default:'' }}">
     <button type="submit">Buscar</button>
 </form>
 
@@ -11,10 +11,15 @@
     <h3>Resultados:</h3>
     <ul>
         {% for post in resultados %}
-            <li><strong>{{ post.titulo }}</strong> - {{ post.autor.nombre }} - {{ post.categoria.nombre }}</li>
+            <li>
+                <a href="{% url 'detalle_post' post.id %}">
+                    <strong>{{ post.titulo }}</strong> - {{ post.autor.nombre }} - {{ post.categoria.nombre }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% elif query %}
     <p>No se encontraron resultados para "<strong>{{ query }}</strong>".</p>
 {% endif %}
 {% endblock %}
+
