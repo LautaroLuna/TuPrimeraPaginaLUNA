@@ -12,9 +12,9 @@
     <ul>
         {% for post in resultados %}
             <li>
-                <a href="{% url 'detalle_post' post.id %}">
-                    <strong>{{ post.titulo }}</strong> - {{ post.autor.nombre }} - {{ post.categoria.nombre }}
-                </a>
+                <a href="{% url 'detalle_post' post.code %}">
+                    <strong>{{ post.titulo }}</strong>
+                </a> - {{ post.autor.nombre }} - {{ post.categoria.nombre }}
             </li>
         {% endfor %}
     </ul>

@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from blog.models import Post
 from .forms import AutorForm, CategoriaForm, PostForm
 from django.db.models import Q
+from .models import Post
 
 def buscar_post(request):
     query = request.GET.get("q")
@@ -51,7 +52,7 @@ def nuevo_post(request):
         form = PostForm()
     return render(request, 'blog/nuevo_post.html', {'form': form})
 
-def detalle_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+def detalle_post(request, code):
+    post = get_object_or_404(Post, code=code)
     return render(request, 'blog/detalle_post.html', {'post': post})
 
